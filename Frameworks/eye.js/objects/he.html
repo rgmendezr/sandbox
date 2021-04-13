@@ -1,0 +1,146 @@
+What is outside the html, script or style tags is not taken into account
+
+<html id="header" class="header">
+
+    <div class="head">
+
+        <!-- to print a variable we enclose it in :{variableName}: -->
+        <h1 class="companyName">Raulito</h1>
+        <h3 class="slogan">:{slogan}:</h3>
+
+    </div>
+
+    <!-- Insert a object inside this object header -->
+    <menu class="menu"></menu>
+
+    <div style="clear: both;" />
+
+</html>
+
+<style>
+    #header,
+    .head,
+    .companyName,
+    .slogan,
+    .menu {
+        -webkit-transition: all 0.2s ease-out;
+        -moz-transition: all 0.2s ease-out;
+        -ms-transition: all 0.2s ease-out;
+        -o-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+    }
+
+    .header {
+        position: fixed;
+        width: 100%;
+        top: 0px;
+        left: 0px;
+        background-color: hotpink;
+        color: #FFF;
+        padding: auto;
+        padding: 20px auto 5px;
+        text-align: center;
+        min-width: 320px;
+    }
+
+    .header-blue {
+        background-color: dodgerblue;
+    }
+
+    .head {
+        width: 100%;
+    }
+
+    .companyName {
+        margin-top: 20px;
+    }
+
+    .slogan {
+        font-size: 20;
+    }
+
+    .menu {
+        border-top: 1px solid #FFF;
+        margin: 15px auto 3px;
+        width: 90%;
+    }
+
+    @media (max-width: 600px) {}
+
+    @media (max-width: 640px) {
+        .header {
+            padding: 5px auto;
+        }
+
+        .head {
+            width: 50%;
+            float: left;
+            margin: 5px auto;
+        }
+
+        .companyName {
+            text-align: left;
+            margin-left: 30px;
+            margin-top: 10px;
+            font-size: 20px;
+        }
+
+        .slogan {
+            display: none;
+        }
+
+        .menu {
+            width: 45%;
+            max-width: 300px;
+            float: right;
+            border: 0px;
+            margin: 5px 5% 5px auto;
+        }
+    }
+</style>
+
+<script>
+    eye.require.html('objects/sub-objects/menu');
+
+    eye.script({
+
+        //Variable required and of the same value of the id attribute of the html tag
+        id: 'header',
+
+        //Have order in case of many objects.
+        route: 'custom.acc',
+
+
+        //**Object variables
+        companyName: "Goofy Cods",
+        slogan: 'The besel for milhoo',
+
+        //**METHODS
+        //This method is called from the content object
+        changeCompanyName: function () {
+            obj('header').companyName = "New Name Co."
+        },
+
+        changeBackgroundColor: function () {
+
+            //Forma segura
+            eye.do('header', (element) => {
+                element.classList.toggle('header-blue');
+            });
+
+            //Forma rapida
+            $('header').classList.toggle('className');
+
+        },
+
+        //Este metodo es especial, si existe, se llama al crear el objeto
+        onCreate: function (object) {
+            eye.event('header', "click", obj('header').changeBackgroundColor);
+        }
+
+
+    });
+</script>
+
+Styles are general throughout the application.
+You can use # to keep the styles on the object: #header {}
